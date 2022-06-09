@@ -1,18 +1,19 @@
 import {Api} from "./api/Api.js";
+import {Button} from "./components/Button.js";
+import {PageBuilder} from "./pages/PageBuilder.js";
+import {DataModel} from "./models/DataModel.js";
 
 export class App {
     constructor() {
         const elBody = document.querySelector("body");
-        const button = document.createElement("button");
-        elBody.textContent = "Welcome to the Quake III Arena!";
-        button.textContent = "test";
+        const pageBuilder = new PageBuilder();
 
-        button.addEventListener("click", (event) => {
-            Api.get(Api.URL_TAGS).then((response) => {
-                console.log(response);
-            });
+        Api.get(Api.URL_TAGS).then((response) => {
+            const model = new DataModel(response);
+            model.setProperty("pageName", "Tags");
+            const page = pageBuilder.createPage(model, PageBuilder.TYPE_TABLE, "Tags");
+            page?.render();
         });
-        elBody.append(button);
     }
 }
 
