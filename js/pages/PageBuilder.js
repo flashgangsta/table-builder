@@ -10,16 +10,16 @@ export class PageBuilder {
 
     }
 
-    createPage(model, type, pageName) {
+    createPage(model, type) {
         let result = null;
         switch (type) {
             case PageBuilder.TYPE_TABLE: {
                 result = TablePageView;
-                break
+                break;
             }
             case PageBuilder.TYPE_FORM: {
                 result = FormPageView;
-                return
+                break;
             }
             default: {
                 throw new Error("Table type not set");

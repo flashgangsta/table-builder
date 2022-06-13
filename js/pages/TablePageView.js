@@ -15,7 +15,7 @@ export class TablePageView extends PageBase {
         caption.textContent = this.model.get("pageName");
 
         //TODO: think about move table cols to backend for easy generate it on frontent
-        
+
         ["Actions", "ID", "NameTranslations", "Human URL", "Type", "Parent ID", "Sequence", "Created At"].map((el, index) => {
             const th = document.createElement("th");
             th.setAttribute("scope", "col");
