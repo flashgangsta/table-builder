@@ -10,9 +10,9 @@ export class PageBuilder {
 
     }
 
-    createPage(model, type) {
+    createPage(pageConfig) {
         let result = null;
-        switch (type) {
+        switch (pageConfig) {
             case PageBuilder.TYPE_TABLE: {
                 result = TablePageView;
                 break;
@@ -25,6 +25,6 @@ export class PageBuilder {
                 throw new Error("Table type not set");
             }
         }
-        return new result(model);
+        return new result(pageConfig);
     }
 }
