@@ -39,7 +39,6 @@ const requestListener = (req, res) => {
             res.end("Success");
         });
     } else if (req.method === "GET") {
-
         const parsedUrl = url.parse(req.url);
         let pathname = `${parsedUrl.pathname}`;
         const parsedPath = path.parse(pathname);

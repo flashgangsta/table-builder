@@ -1,12 +1,22 @@
 import {ElementBase} from "./ElementBase.js";
+import {DataModel} from "../models/DataModel.js";
 
 export class PageBase extends ElementBase {
 
-    model = null;
+    #pageConfig;
+    #dataModel = new DataModel();
 
-    constructor(model) {
+    constructor(pageConfig) {
         super();
-        this.model = model;
+        this.#pageConfig = pageConfig;
+    }
+
+    get pageConfig() {
+        return this.#pageConfig;
+    }
+
+    get dataModel() {
+        return this.#dataModel;
     }
 
     render() {

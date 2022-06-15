@@ -1,16 +1,14 @@
 import {HappifiersConfigBase} from "../HappifiersConfigBase.js";
-import {PageBuilder} from "../../../pages/PageBuilder.js";
 import {ColBuilder} from "../../../utils/ColBuilder.js";
 
-export class AuthorsConfig extends HappifiersConfigBase {
+export class ExpertsConfig extends HappifiersConfigBase {
     constructor() {
         super();
     }
 
     getBaseConfig() {
         return super.getBaseConfig({
-            caption: "Authors",
-            requestTitle: "allAuthors",
+            requestTitle: "allExperts",
             cols: [
                 ColBuilder.getCol("ID", "id", false),
                 ColBuilder.getCol("Author Name", "authorName"),

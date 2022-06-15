@@ -1,46 +1,73 @@
 import {ElementEvent} from "./events/ElementEvent.js";
+import {AuthorsConfig} from "./pagesConfigs/hd/authors/AuthorsConfig.js";
+import {RouterEvent} from "./events/RouterEvent.js";
+import {ExpertsConfig} from "./pagesConfigs/hd/experts/ExpertsConfig.js";
 
-export class Router {
+export class Router extends EventTarget {
 
     #elAppendedHandler;
     #elScene;
-    #menuData = [];
-    #routes = [];
+    #routesList;
+    #menuData;
+    #currentRoute = "/";
+    #isStarted = false;
+
+    #routes = {
+        "/authors/": AuthorsConfig,
+        "/experts/": ExpertsConfig,
+    };
 
     constructor() {
+        super();
+        this.#routesList = Object.keys(this.#routes);
         this.#elScene = document.querySelector("el-scene");
         this.#elAppendedHandler = this.#onLinkAppended.bind(this);
         this.#elScene.addEventListener(ElementEvent.ON_ELEMENT_APPENDED, this.#elAppendedHandler);
-        window.onpopstate = function(event) {
-            alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`)
-        }
     }
 
 
-    setRoutes(menuData) {
-        menuData.forEach((item, index) => {
-            console.log(item);
-            this.#menuData.push(item.link);
-        })
+    start(menuData) {
+        if(this.#isStarted) return;
+        this.#menuData = menuData;
+
+        const currentPathname = location.pathname;
+        if(currentPathname !== this.#currentRoute) {
+            this.navigate(currentPathname);
+        }
+        this.#isStarted = true;
     }
 
 
     #onLinkAppended(event) {
         const link = event.target;
-        if(link.tagName === "A" && this.#routes.includes(new URL(link).pathname)) {
-            const clickHandler = this.#updatePage.bind(this);
-            link.addEventListener("click", clickHandler);
+        if(link.tagName === "A" && this.#routesList.includes(new URL(link).pathname)) {
+            const onLinkClickHandler = this.#onLinkClickHandler.bind(this);
+            link.addEventListener("click", onLinkClickHandler);
             link.addEventListener(ElementEvent.ON_ELEMENT_REMOVED, (event) => {
-                link.removeEventListener("click", clickHandler);
+                link.removeEventListener("click", onLinkClickHandler);
             })
         }
     }
 
 
-    #updatePage(event) {
+    #onLinkClickHandler(event) {
+        console.log("#onLinkClickHandler");
         const pathname = new URL(event.currentTarget.href).pathname;
-        console.log("UpdatePage:", pathname);
         event.preventDefault();
-        window.history.pushState(null, '', event.target.href);
+        this.navigate(pathname);
+    }
+
+    get currentRoute() {
+        return this.#currentRoute;
+    }
+
+    get configClass() {
+        return this.#routes[this.#currentRoute];
+    }
+
+    navigate(pathname) {
+        this.#currentRoute = pathname
+        history.pushState(null, '', location.origin + pathname);
+        this.dispatchEvent(new RouterEvent(RouterEvent.ON_ROUTE_CHANGED));
     }
 }

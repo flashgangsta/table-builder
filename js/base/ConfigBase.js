@@ -1,7 +1,7 @@
-import {PageBuilder} from "../pages/PageBuilder.js";
-import {StringUtil} from "../utils/StringUtil.js";
-
 export class ConfigBase {
+
+    static get VIEW_TYPE_TABLE() {return "viewTypeTable"};
+    static get VIEW_TYPE_FORM() {return "viewTypeForm"};
 
     constructor() {
 
@@ -9,7 +9,7 @@ export class ConfigBase {
 
     getBaseConfig(...args) {
         return Object.assign({
-            viewType: PageBuilder.TYPE_TABLE,
+            viewType: ConfigBase.VIEW_TYPE_TABLE,
         }, ...args);
     }
 
@@ -21,7 +21,7 @@ export class ConfigBase {
 
     getRequestBody() {
         const config = this.getConfig();
-        return config.viewType = PageBuilder.TYPE_TABLE ? this.#getTableRequestBody() : this.#getFormRequestBody();
+        return config.viewType = ConfigBase.VIEW_TYPE_TABLE ? this.#getTableRequestBody() : this.#getFormRequestBody();
     }
 
 
@@ -30,14 +30,13 @@ export class ConfigBase {
 
         return {
             operationName: config.requestTitle,
-            query: `query MyQuery($offset: Int!, $orderBy: [AuthorsOrderBy!], $first: Int!) {
+            query: `query ${config.requestTitle}($offset: Int!, $orderBy: [AuthorsOrderBy!], $first: Int!) {
                 ${config.requestTitle}(offset: $offset, orderBy: $orderBy, first: $first) {
                     edges {
                         node {
-                            ${config.colTitles.map((colTitle) => {
-                const camelCased = StringUtil.toCamelCase(colTitle);
-                return camelCased + (colTitle === "ID" ? "" : `:${camelCased}Translations`);
-            }).join("\n                             ")}
+                            ${config.cols.map((col) => {
+                                return col.fieldName;
+                            }).join("\n                             ")}
                         }
                     }
                 }

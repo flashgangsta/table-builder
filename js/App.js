@@ -7,17 +7,24 @@ import {AuthorsConfig} from "./pagesConfigs/hd/authors/AuthorsConfig.js";
 import {Router} from "./Router.js";
 import {Scene} from "./Scene.js";
 import {ElementEvent} from "./events/ElementEvent.js";
+import {RouterEvent} from "./events/RouterEvent.js";
 
 export class App {
 
     #router;
     #elScene;
+    #currentPage;
+    #pageBuilder;
 
     constructor() {
         this.#elScene = new Scene();
         document.querySelector("body").append(this.#elScene);
 
         this.#router = new Router();
+        this.#router.addEventListener(RouterEvent.ON_ROUTE_CHANGED, this.#onRouteChanged.bind(this));
+
+        this.#pageBuilder = new PageBuilder();
+
         this.#requestMenu();
 
         /*const pageBuilder = new PageBuilder();
@@ -29,7 +36,9 @@ export class App {
         });*/
         //console.log(">>>", new AuthorsConfig().getConfig());
 
-        Api.gql("/happifiers", new AuthorsConfig().getRequestBody());
+        //const config = new AuthorsConfig()
+        //console.log(config.getRequestBody());
+        //Api.gql(config.getConfig().url, config.getRequestBody());
     }
 
     #requestMenu() {
@@ -37,9 +46,20 @@ export class App {
             const menuData = new DataModel(response);
             const menuItemsList = menuData.get("items");
             const menu = new Menu(menuItemsList);
-            this.#router.setRoutes(menuItemsList);
             this.#elScene.append(menu);
+
+            this.#router.start(menuItemsList);
         });
+    }
+
+
+    #onRouteChanged(event) {
+        if(this.#currentPage) {
+            this.#currentPage.remove();
+        }
+
+        this.#currentPage = this.#pageBuilder.createPage(new this.#router.configClass());
+        this.#elScene.append(this.#currentPage);
     }
 
 }

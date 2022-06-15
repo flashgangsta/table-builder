@@ -1,23 +1,23 @@
 import {FormPageView} from "./FormPageView.js";
 import {TablePageView} from "./TablePageView.js";
+import {ConfigBase} from "../base/ConfigBase.js";
 
 export class PageBuilder {
-
-    static get TYPE_TABLE() {return "table"};
-    static get TYPE_FORM() {return "form"};
 
     constructor() {
 
     }
 
     createPage(pageConfig) {
+        let config = pageConfig.getConfig();
         let result = null;
-        switch (pageConfig) {
-            case PageBuilder.TYPE_TABLE: {
+
+        switch (config.viewType) {
+            case ConfigBase.VIEW_TYPE_TABLE: {
                 result = TablePageView;
                 break;
             }
-            case PageBuilder.TYPE_FORM: {
+            case ConfigBase.VIEW_TYPE_FORM: {
                 result = FormPageView;
                 break;
             }

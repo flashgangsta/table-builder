@@ -1,22 +1,27 @@
 import {PageBase} from "../base/PageBase.js";
 
 export class TablePageView extends PageBase {
-    constructor(...attributes) {
-        super(...attributes);
+
+    constructor(pageConfig) {
+        super(pageConfig);
+        console.log(this.pageConfig);
+        this.render();
     }
 
     render() {
+        const config = this.pageConfig.getConfig();
+        const colTitles = ["Actions", ...config.cols.map(col => col.displayName)];
+
         const table = document.createElement("table");
         const caption = document.createElement("caption");
         const tableHead = document.createElement("thead");
         const tr = document.createElement("tr");
         const tableBody = document.createElement("tbody");
 
-        caption.textContent = this.model.get("pageName");
+        caption.textContent = config.caption;
 
-        //TODO: think about move table cols to backend for easy generate it on frontent
 
-        ["Actions", "ID", "NameTranslations", "Human URL", "Type", "Parent ID", "Sequence", "Created At"].map((el, index) => {
+        colTitles.map((el, index) => {
             const th = document.createElement("th");
             th.setAttribute("scope", "col");
             th.textContent = el;

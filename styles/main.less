@@ -36,18 +36,23 @@ body {
       }
     }
 
+    @menuHeight: 50px;
+
     el-menu {
-      @height: 50px;
       display: block;
       width: 100%;
-      height: @height;
-      line-height: @height;
+      height: @menuHeight;
+      line-height: @menuHeight;
       background-color: cornflowerblue;
       text-align: center;
 
       a {
         margin: 0 10px;
       }
+    }
+
+    el-table-page, el-form-page {
+
     }
   }
 }
