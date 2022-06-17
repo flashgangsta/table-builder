@@ -1,6 +1,5 @@
 import {HappifiersConfigBase} from "../HappifiersConfigBase.js";
-import {PageBuilder} from "../../../pages/PageBuilder.js";
-import {ColBuilder} from "../../../utils/ColBuilder.js";
+import {ColDataBuilder} from "../../../utils/ColDataBuilder.js";
 
 export class AuthorsConfig extends HappifiersConfigBase {
     constructor() {
@@ -10,12 +9,10 @@ export class AuthorsConfig extends HappifiersConfigBase {
     getBaseConfig() {
         return super.getBaseConfig({
             caption: "Authors",
-            requestTitle: "allAuthors",
             cols: [
-                ColBuilder.getCol("ID", "id", false),
-                ColBuilder.getCol("Author Name", "authorName"),
-                ColBuilder.getCol("Author Info", "authorInfo"),
-                ColBuilder.getCol("Author Image", "authorImage")
+                ColDataBuilder.getCol("Author Name", "authorName", ColDataBuilder.COL_TYPE_STRING),
+                ColDataBuilder.getCol("Author Info", "authorInfo", ColDataBuilder.COL_TYPE_STRING),
+                ColDataBuilder.getCol("Author Image", "authorImage", ColDataBuilder.COL_TYPE_IMAGE)
             ],
         });
     }

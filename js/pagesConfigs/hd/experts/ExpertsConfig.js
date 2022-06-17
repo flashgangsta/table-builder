@@ -1,5 +1,5 @@
 import {HappifiersConfigBase} from "../HappifiersConfigBase.js";
-import {ColBuilder} from "../../../utils/ColBuilder.js";
+import {ColDataBuilder} from "../../../utils/ColDataBuilder.js";
 
 export class ExpertsConfig extends HappifiersConfigBase {
     constructor() {
@@ -8,13 +8,14 @@ export class ExpertsConfig extends HappifiersConfigBase {
 
     getBaseConfig() {
         return super.getBaseConfig({
-            requestTitle: "allExperts",
+            caption: "Experts",
             cols: [
-                ColBuilder.getCol("ID", "id", false),
-                ColBuilder.getCol("Author Name", "authorName"),
-                ColBuilder.getCol("Author Info", "authorInfo"),
-                ColBuilder.getCol("Author Image", "authorImage")
+                ColDataBuilder.getCol("Expert Name", "expertName", ColDataBuilder.COL_TYPE_STRING),
+                ColDataBuilder.getCol("Expert Info", "expertInfo", ColDataBuilder.COL_TYPE_STRING),
+                ColDataBuilder.getCol("Expert Image", "expertImage", ColDataBuilder.COL_TYPE_IMAGE),
+                ColDataBuilder.getCol("Expert Link", "expertLink", ColDataBuilder.COL_TYPE_LINK, false)
             ],
+            orderBy: ["ID_ASC"]
         });
     }
 }

@@ -2,6 +2,7 @@ import {ElementEvent} from "./events/ElementEvent.js";
 import {AuthorsConfig} from "./pagesConfigs/hd/authors/AuthorsConfig.js";
 import {RouterEvent} from "./events/RouterEvent.js";
 import {ExpertsConfig} from "./pagesConfigs/hd/experts/ExpertsConfig.js";
+import {TagsConfig} from "./pagesConfigs/hd/tags/TagsConfig.js";
 
 export class Router extends EventTarget {
 
@@ -15,6 +16,7 @@ export class Router extends EventTarget {
     #routes = {
         "/authors/": AuthorsConfig,
         "/experts/": ExpertsConfig,
+        "/tags/": TagsConfig,
     };
 
     constructor() {
@@ -66,7 +68,7 @@ export class Router extends EventTarget {
     }
 
     navigate(pathname) {
-        this.#currentRoute = pathname
+        this.#currentRoute = pathname;
         history.pushState(null, '', location.origin + pathname);
         this.dispatchEvent(new RouterEvent(RouterEvent.ON_ROUTE_CHANGED));
     }
