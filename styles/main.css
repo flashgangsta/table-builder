@@ -19,13 +19,17 @@ body el-scene {
   height: 100vh;
 }
 body el-scene el-chip {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   height: 24px;
   border-radius: 16px;
   background-color: #f8f7f6;
   color: #1f313c;
+  padding: 0 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 body el-scene el-menu {
   display: block;
@@ -61,6 +65,9 @@ body el-scene el-table-page .wrapper {
 body el-scene el-table-page .footer-wrapper {
   margin-top: 20px;
   min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 body el-scene el-table-page table {
   width: 100%;
@@ -118,5 +125,75 @@ body el-scene el-table-page table tbody tr td img {
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
+}
+body el-scene .loading {
+  overflow: hidden;
+  background-color: #DDDBDD;
+  position: relative;
+}
+body el-scene .loading::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+  animation: shimmer 2s infinite;
+  content: '';
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+body el-scene el-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-color: grey;
+  text-indent: initial;
+}
+body el-scene el-table el-table-caption {
+  text-align: left;
+  padding: 0 12px;
+  display: table-caption;
+  height: 36px;
+  margin-bottom: 20px;
+}
+body el-scene el-table el-table-caption .caption-title {
+  display: inline-flex;
+  margin: 0;
+  align-items: center;
+}
+body el-scene el-table el-table-caption .caption-title el-chip {
+  margin-left: 16px;
+  font-size: 0.9rem;
+  min-width: 14px;
+}
+body el-scene el-table el-table-head {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+body el-scene el-table el-table-head el-table-row {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+body el-scene el-table el-table-head el-table-row el-table-head-cell,
+body el-scene el-table el-table-head el-table-row el-table-cell {
+  display: table-cell;
+  padding: 0 12px;
+  vertical-align: middle;
+}
+body el-scene el-table el-table-head el-table-row el-table-head-cell {
+  height: 40px;
+  border-bottom: 1px solid #f4f2f1;
+  color: #8f989e;
+  font-size: 14px;
+  text-align: left;
+  font-weight: bold;
 }
 /*# sourceMappingURL=main.css.map */

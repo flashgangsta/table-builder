@@ -3,12 +3,13 @@ import {Api} from "../api/Api.js";
 import {ColDataBuilder} from "../utils/ColDataBuilder.js";
 import {App} from "../App.js";
 import {Chip} from "../components/Chip.js";
+import {TableRecordsCountSelect} from "../widgets/table/TableRecordsCountSelect.js";
+import {Table} from "../widgets/table/Table.js";
 
 export class TablePageView extends PageBase {
 
     constructor(pageConfig) {
         super(pageConfig);
-        console.log(this.pageConfig);
         this.render();
     }
 
@@ -25,9 +26,15 @@ export class TablePageView extends PageBase {
         const tableHead = document.createElement("thead");
         const tr = document.createElement("tr");
         const tableBody = document.createElement("tbody");
+        const countSelect = new TableRecordsCountSelect();
+
+        const tab = new Table(this.pageConfig);
+        tableWrapper.append(tab);
 
         tableWrapper.classList.add("wrapper");
         footerWrapper.classList.add("wrapper", "footer-wrapper");
+        countSelect.addEventListener("change", this.#onRowsCountChanged.bind(this));
+        footerWrapper.append(countSelect);
 
         captionTitle.classList.add("caption-title");
         captionTitle.textContent = config.caption;
@@ -61,8 +68,6 @@ export class TablePageView extends PageBase {
         tableWrapper.append(table);
         this.append(footerWrapper);
 
-        console.log(this.pageConfig.getRequestBody().query)
-
         Api.gql(config.url, this.pageConfig.getRequestBody()).then((response) => {
 
             this.dataModel.set(response.data[config.requestTitle]);
@@ -74,11 +79,6 @@ export class TablePageView extends PageBase {
                 row.querySelectorAll("td").forEach((col) => {
                     const colFieldName = col.getAttribute("data-field");
                     const value = edge[colFieldName];
-
-                    console.log("colFieldName:", colFieldName);
-                    console.log("value:", value);
-                    console.log("type:", this.pageConfig.getColTypeByFieldName(colFieldName));
-                    console.log("--------------------");
 
                     if(value) {
                         const colType = this.pageConfig.getColTypeByFieldName(colFieldName);
@@ -114,6 +114,13 @@ export class TablePageView extends PageBase {
         });
 
         super.render();
+    }
+
+
+    #onRowsCountChanged(event) {
+        event.stopPropagation();
+        console.log("onRowsCountChanged()");
+        console.log(event.target);
     }
 }
 

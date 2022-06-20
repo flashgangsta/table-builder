@@ -41,7 +41,10 @@ export class Api {
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
 
-    static async gql(url, body) {
+    static async gql(url, body, variables=null) {
+        if(variables) {
+            body.variables = {...body.variables, ...variables};
+        }
         const response = await fetch(Api.#GQL_URL + url,
             Object.assign(Api.#FETCH_INIT, {
                 body: JSON.stringify(body)

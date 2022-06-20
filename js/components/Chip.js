@@ -3,7 +3,7 @@ import {ElementBase} from "../base/ElementBase.js";
 export class Chip extends ElementBase {
     constructor(label) {
         super();
-        this.textContent = label;
+        this.textContent = label || "";
     }
 }
 
