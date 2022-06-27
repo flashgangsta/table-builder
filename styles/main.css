@@ -17,6 +17,7 @@ body el-scene {
   width: 100%;
   background-color: #f4f2f1;
   height: 100vh;
+  /*Table*/
 }
 body el-scene el-chip {
   display: inline-flex;
@@ -154,6 +155,8 @@ body el-scene el-table {
   border-spacing: 0;
   border-color: grey;
   text-indent: initial;
+  /*Caption*/
+  /*tr*/
 }
 body el-scene el-table el-table-caption {
   text-align: left;
@@ -172,28 +175,44 @@ body el-scene el-table el-table-caption .caption-title el-chip {
   font-size: 0.9rem;
   min-width: 14px;
 }
-body el-scene el-table el-table-head {
-  display: table-header-group;
-  vertical-align: middle;
-  border-color: inherit;
-}
-body el-scene el-table el-table-head el-table-row {
+body el-scene el-table el-table-row {
   display: table-row;
   vertical-align: inherit;
   border-color: inherit;
+  /*th, td*/
+  /*th*/
+  /*tr*/
 }
-body el-scene el-table el-table-head el-table-row el-table-head-cell,
-body el-scene el-table el-table-head el-table-row el-table-cell {
+body el-scene el-table el-table-row el-table-head-cell,
+body el-scene el-table el-table-row el-table-cell {
   display: table-cell;
   padding: 0 12px;
   vertical-align: middle;
 }
-body el-scene el-table el-table-head el-table-row el-table-head-cell {
+body el-scene el-table el-table-row el-table-head-cell {
   height: 40px;
   border-bottom: 1px solid #f4f2f1;
   color: #8f989e;
   font-size: 14px;
   text-align: left;
   font-weight: bold;
+}
+body el-scene el-table el-table-row el-table-cell {
+  min-height: 64px;
+  height: 64px;
+  border-bottom: 1px solid #f4f2f1;
+}
+body el-scene el-table el-table-row el-table-cell img {
+  max-height: 60px;
+}
+body el-scene el-table el-table-head {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+body el-scene el-table el-table-body {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
 }
 /*# sourceMappingURL=main.css.map */

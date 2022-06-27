@@ -18,7 +18,6 @@ export class Select extends ElementBase {
     #buildSelect() {
         this.#select  = document.createElement("select");
         this.#options.forEach((label, index) => {
-            console.log(label);
             const option = document.createElement("option");
             option.value = option.textContent = label;
             this.#select.append(option);

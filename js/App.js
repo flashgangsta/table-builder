@@ -5,8 +5,11 @@ import {Menu} from "./widgets/Menu.js";
 import {Router} from "./Router.js";
 import {Scene} from "./Scene.js";
 import {RouterEvent} from "./events/RouterEvent.js";
+import {UserModel} from "./models/UserModel.js";
 
 export class App {
+
+    #currentUser;
     #router;
     #elScene;
     #currentPage;
@@ -15,6 +18,7 @@ export class App {
     static get currentLocale() {return "en_US"}; //TODO: move it from here
 
     constructor() {
+        this.#currentUser = new UserModel({"success":true,"user":{"first_name":"sdf","last_name":"sdf","roles":["admin","staff","space_admin","super_admin","cms_db_admin"],"email":"sergeykv@alarstudios.com"}});
         this.#elScene = new Scene();
         document.querySelector("body").append(this.#elScene);
 
